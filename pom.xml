@@ -4,7 +4,7 @@
     <!-- Parent Project Information -->
     <groupId>net.wiskr</groupId>
     <artifactId>ScheduledAnnouncer</artifactId>
-    <version>2.5</version>
+    <version>2.5-SNAPSHOT</version>
     <name>ScheduledAnnouncer</name>
     <url>http://dev.bukkit.org/server-mods/scheduledannouncer2/</url>
     <description>Scheduled Announcer is a very simple tool, which only does what's its name told us. It automatically sends a broadcast out of a list controlled by a scheduled.</description>

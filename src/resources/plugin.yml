@@ -1,6 +1,6 @@
 name: ScheduledAnnouncer2
 main: net.wiskr.ScheduledAnnouncer.AnnouncerPlugin
-version: 2.5
+version: 2.5-SNAPSHOT
 description: Automatically Announce tips and news!
 website: http://github.com/whisk1/ScheduledAnnouncer
 authors:

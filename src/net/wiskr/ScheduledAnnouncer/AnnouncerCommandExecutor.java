@@ -1,8 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   AnnouncerCommandExecutor.java
-
 package net.wiskr.ScheduledAnnouncer;
 
 import java.util.List;
@@ -10,20 +5,13 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.*;
 import org.bukkit.plugin.PluginDescriptionFile;
 
-// Referenced classes of package net.wiskr.ScheduledAnnouncer:
-//            AnnouncerPlugin, ChatColorHelper
+class AnnouncerCommandExecutor implements CommandExecutor {
 
-class AnnouncerCommandExecutor
-    implements CommandExecutor
-{
-
-    AnnouncerCommandExecutor(AnnouncerPlugin plugin)
-    {
+    AnnouncerCommandExecutor(AnnouncerPlugin plugin) {
         this.plugin = plugin;
     }
 
-    public boolean onCommand(CommandSender sender, Command command, String label, String args[])
-    {
+    public boolean onCommand(CommandSender sender, Command command, String label, String args[]) {
         boolean success;
         if(args.length == 0 || args[0].equalsIgnoreCase("version") || args[0].equalsIgnoreCase("info"))
             success = onVersionCommand(sender, command, label, args);
@@ -64,8 +52,7 @@ class AnnouncerCommandExecutor
         return true;
     }
 
-    boolean onVersionCommand(CommandSender sender, Command command, String label, String args[])
-    {
+    boolean onVersionCommand(CommandSender sender, Command command, String label, String args[]) {
         sender.sendMessage(String.format("%s === %s [Version %s] === ", new Object[] {
             ChatColor.LIGHT_PURPLE, plugin.getDescription().getName(), plugin.getDescription().getVersion()
         }));
@@ -86,8 +73,7 @@ class AnnouncerCommandExecutor
         return true;
     }
 
-    boolean onHelpCommand(CommandSender sender, Command command, String label, String args[])
-    {
+    boolean onHelpCommand(CommandSender sender, Command command, String label, String args[]) {
         sender.sendMessage(String.format("%s === %s [Version %s] === ", new Object[] {
             ChatColor.LIGHT_PURPLE, plugin.getDescription().getName(), plugin.getDescription().getVersion()
         }));
@@ -97,8 +83,7 @@ class AnnouncerCommandExecutor
             sender.sendMessage((new StringBuilder()).append(ChatColor.GRAY).append("/announce broadcast [<index>]").append(ChatColor.WHITE).append(" - Broadcast an announcement NOW").toString());
         if(sender.hasPermission("announcer.delete"))
             sender.sendMessage((new StringBuilder()).append(ChatColor.GRAY).append("/announce delete <index>").append(ChatColor.WHITE).append(" - Removes the announcement with the passed index").toString());
-        if(sender.hasPermission("announcer.moderate"))
-        {
+        if(sender.hasPermission("announcer.moderate")) {
             sender.sendMessage((new StringBuilder()).append(ChatColor.GRAY).append("/announce enable [true|false]").append(ChatColor.WHITE).append(" - Enables or disables the announcer.").toString());
             sender.sendMessage((new StringBuilder()).append(ChatColor.GRAY).append("/announce interval <seconds>").append(ChatColor.WHITE).append(" - Sets the seconds between the announcements.").toString());
             sender.sendMessage((new StringBuilder()).append(ChatColor.GRAY).append("/announce prefix <message>").append(ChatColor.WHITE).append(" - Sets the prefix for all announcements.").toString());
@@ -110,15 +95,11 @@ class AnnouncerCommandExecutor
         return true;
     }
 
-    boolean onAddCommand(CommandSender sender, Command command, String label, String args[])
-    {
-        if(sender.hasPermission("announcer.add"))
-        {
-            if(args.length > 1)
-            {
+    boolean onAddCommand(CommandSender sender, Command command, String label, String args[]) {
+        if(sender.hasPermission("announcer.add")) {
+            if(args.length > 1) {
                 StringBuilder messageToAnnounce = new StringBuilder();
-                for(int index = 1; index < args.length; index++)
-                {
+                for(int index = 1; index < args.length; index++) {
                     messageToAnnounce.append(args[index]);
                     messageToAnnounce.append(" ");
                 }
@@ -127,24 +108,19 @@ class AnnouncerCommandExecutor
                 sender.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append("Added announcement successfully!").toString());
                 if(args.length > 100)
                     sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("This message is too long!").toString());
-            } else
-            {
+            } else {
                 sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("You need to pass a message to announce!").toString());
             }
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
-    boolean onBroadcastCommand(CommandSender sender, Command command, String label, String args[])
-    {
-        if(sender.hasPermission("announcer.broadcast"))
-        {
-            if(args.length == 2)
-                try
-                {
+    boolean onBroadcastCommand(CommandSender sender, Command command, String label, String args[]) {
+        if(sender.hasPermission("announcer.broadcast")) {
+            if(args.length == 2) {
+                try {
                     int index = Integer.parseInt(args[1]);
                     if(index > 0 && index <= plugin.numberOfAnnouncements())
                         plugin.announce(index);
@@ -155,32 +131,27 @@ class AnnouncerCommandExecutor
                 {
                     sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Index must be a integer!").toString());
                 }
-            else
-            if(args.length == 1)
+            } else if(args.length == 1) {
                 plugin.announce();
-            else
+            } else {
                 sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Invalid number of arguments! Use /announce help to view the help!").toString());
+            }
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
     boolean onListCommand(CommandSender sender, Command command, String label, String args[])
     {
-        if(sender.hasPermission("announcer.moderate"))
-        {
-            if(args.length == 1 || args.length == 2)
-            {
+        if(sender.hasPermission("announcer.moderate")) {
+            if(args.length == 1 || args.length == 2) {
                 int page = 1;
                 if(args.length == 2)
-                    try
-                    {
+                    try {
                         page = Integer.parseInt(args[1]);
                     }
-                    catch(NumberFormatException e)
-                    {
+                    catch(NumberFormatException e) {
                         sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Invalid page number!").toString());
                     }
                 sender.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(String.format(" === Announcements [Page %d/%d] ===", new Object[] {
@@ -193,27 +164,22 @@ class AnnouncerCommandExecutor
                         Integer.valueOf(index), ChatColorHelper.replaceColorCodes(plugin.getAnnouncement(index))
                     }));
 
-            } else
-            {
+            } else {
                 sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Invalid number of arguments! Use '/announce help' to view the help.").toString());
             }
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
     boolean onDeleteCommand(CommandSender sender, Command command, String label, String args[])
     {
-        if(sender.hasPermission("announcer.delete"))
-        {
-            if(args.length == 2)
-                try
-                {
+        if(sender.hasPermission("announcer.delete")) {
+            if(args.length == 2) {
+                try {
                     int index = Integer.parseInt(args[1]);
-                    if(index > 0 && index <= plugin.numberOfAnnouncements())
-                    {
+                    if(index > 0 && index <= plugin.numberOfAnnouncements()) {
                         sender.sendMessage(String.format("%sRemoved announcement: '%s'", new Object[] {
                             ChatColor.GREEN, plugin.getAnnouncement(index)
                         }));
@@ -222,24 +188,22 @@ class AnnouncerCommandExecutor
                     sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("There isn't any announcement with the passed index!").toString());
                     sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Use '/announce list' to view all available announcements.").toString());
                 }
-                catch(NumberFormatException e)
-                {
+                catch(NumberFormatException e) {
                     sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Index must be a integer!").toString());
                 }
-            else
+            } else {
                 sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Too many arguments! Use '/announce help' to view the help.").toString());
+            }
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }
 
     boolean onIntervalCommand(CommandSender sender, Command command, String label, String args[])
     {
-        if(sender.hasPermission("announcer.moderate"))
-        {
-            if(args.length == 2)
+        if(sender.hasPermission("announcer.moderate")) {
+            if(args.length == 2) {
                 try
                 {
                     plugin.setAnnouncementInterval(Integer.parseInt(args[1]));
@@ -253,16 +217,15 @@ class AnnouncerCommandExecutor
                 {
                     sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Interval must be greater than 0!").toString());
                 }
-            else
-            if(args.length == 1)
+            } else if(args.length == 1) {
                 sender.sendMessage(String.format("%sPeriod duration is %d", new Object[] {
                     ChatColor.LIGHT_PURPLE, Long.valueOf(plugin.getAnnouncementInterval())
                 }));
-            else
+            } else {
                 sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Too many arguments! Use '/announce help' to view the help!").toString());
+            }
             return true;
-        } else
-        {
+        } else {
             return false;
         }
     }

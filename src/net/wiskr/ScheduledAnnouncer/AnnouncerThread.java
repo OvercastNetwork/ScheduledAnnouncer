@@ -1,14 +1,6 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   AnnouncerThread.java
-
 package net.wiskr.ScheduledAnnouncer;
 
 import java.util.Random;
-
-// Referenced classes of package net.wiskr.ScheduledAnnouncer:
-//            AnnouncerPlugin
 
 class AnnouncerThread extends Thread
 {

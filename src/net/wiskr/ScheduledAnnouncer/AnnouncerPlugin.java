@@ -1,8 +1,3 @@
-// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
-// Jad home page: http://www.kpdus.com/jad.html
-// Decompiler options: packimports(3) 
-// Source File Name:   AnnouncerPlugin.java
-
 package net.wiskr.ScheduledAnnouncer;
 
 import java.io.File;
@@ -14,9 +9,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
-
-// Referenced classes of package net.wiskr.ScheduledAnnouncer:
-//            AnnouncerThread, AnnouncerCommandExecutor, ChatColorHelper
+import org.bukkit.entity.Player;
 
 public class AnnouncerPlugin extends JavaPlugin
 {
@@ -74,10 +67,14 @@ public class AnnouncerPlugin extends JavaPlugin
             }
             if(getServer().getOnlinePlayers().length > 0)
             {
-                String messageToSend = ChatColorHelper.replaceColorCodes(String.format("%s%s", new Object[] {
-                    announcementPrefix, message
-                }));
-                getServer().broadcast(messageToSend, "announcer.receiver");
+                String messageToSend = ChatColorHelper.replaceColorCodes(announcementPrefix + message);
+                for(Player player : getServer().getOnlinePlayers())
+                {
+                    if(player.hasPermission("announcer.receiver"))
+                    {
+                        player.sendMessage(messageToSend.replaceAll("%player", player.getName()));
+                    }
+                }
             }
         }
 

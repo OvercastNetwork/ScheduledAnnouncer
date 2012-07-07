@@ -122,10 +122,12 @@ class AnnouncerCommandExecutor implements CommandExecutor {
             if(args.length == 2) {
                 try {
                     int index = Integer.parseInt(args[1]);
-                    if(index > 0 && index <= plugin.numberOfAnnouncements())
+                    if(index > 0 && index <= plugin.numberOfAnnouncements()) {
                         plugin.announce(index);
-                    sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("There isn't any announcement with the passed index!").toString());
-                    sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Use '/announce list' to view all available announcements.").toString());
+                    } else {
+                        sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("There isn't any announcement with the passed index!").toString());
+                        sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Use '/announce list' to view all available announcements.").toString());
+                    }
                 }
                 catch(NumberFormatException e)
                 {

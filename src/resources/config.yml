@@ -1,0 +1,34 @@
+#
+# ScheduledAnnouncer Configuration File
+# =====================================
+#
+# Don't use tabs in *.yml file!
+# 
+# Please note that there is a 85 (with the default prefix) character
+# limit on announcements.
+# 
+# If you mess this config up, feel free to delete this one, and let
+# the plugin create you a new one!
+#
+
+announcement:
+    # Use this flag to temporary disable the announcements.
+    # enabled: false, means that there wouldn't be any announcements.
+    enabled: true
+
+    # Set this to true will announce in random order.
+    # 'false' will announce in sequential (one after another) order.
+    random: false
+
+    # Defines the prefix for the announcement. Use & + hex char for color codes.
+    prefix: '&c[Announcement] '
+
+    # The time of one interval in seconds.
+    interval: 100
+
+    # List of messages to announce. You could use color codes by using & + hex chars too.
+    messages:
+    - 'This is the first default announcement!'
+    - 'Use /announce help to get info how to config this plugin.'
+    - 'You can also configure this plugin with its config.yml too!'
+    

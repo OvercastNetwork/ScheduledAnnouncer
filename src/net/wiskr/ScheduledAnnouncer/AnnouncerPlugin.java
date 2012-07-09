@@ -30,9 +30,6 @@ public class AnnouncerPlugin extends JavaPlugin
         AnnouncerCommandExecutor announcerCommandExecutor = new AnnouncerCommandExecutor(this);
         getCommand("announce").setExecutor(announcerCommandExecutor);
         getCommand("announcer").setExecutor(announcerCommandExecutor);
-        logger.info(String.format("%s is enabled!\n", new Object[] {
-            getDescription().getFullName()
-        }));
     }
 
     public void onDisable()

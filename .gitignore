@@ -1,2 +1,8 @@
-target
-.DS_Store
+# Maven
+target/
+
+# Java
+*.class
+*.jar
+*.war
+*.ear

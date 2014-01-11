@@ -3,10 +3,9 @@ package net.wiskr.ScheduledAnnouncer;
 import java.io.File;
 import java.util.List;
 import java.util.logging.Logger;
-import org.bukkit.Server;
-import org.bukkit.command.PluginCommand;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.plugin.PluginDescriptionFile;
+
+import me.anxuiz.settings.bukkit.PlayerSettings;
+import net.wiskr.ScheduledAnnouncer.settings.Settings;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.entity.Player;
@@ -30,6 +29,7 @@ public class AnnouncerPlugin extends JavaPlugin
         AnnouncerCommandExecutor announcerCommandExecutor = new AnnouncerCommandExecutor(this);
         getCommand("announce").setExecutor(announcerCommandExecutor);
         getCommand("announcer").setExecutor(announcerCommandExecutor);
+        Settings.register();
     }
 
     public void onDisable()
@@ -67,7 +67,7 @@ public class AnnouncerPlugin extends JavaPlugin
                 String messageToSend = ChatColorHelper.replaceColorCodes(announcementPrefix + message);
                 for(Player player : getServer().getOnlinePlayers())
                 {
-                    if(player.hasPermission("announcer.receiver"))
+                    if(player.hasPermission("announcer.receiver") && PlayerSettings.getManager(player).getValue(Settings.TIPS, Boolean.class))
                     {
                         player.sendMessage(messageToSend.replaceAll("%player", player.getName()));
                     }

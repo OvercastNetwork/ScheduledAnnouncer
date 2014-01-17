@@ -39,13 +39,13 @@
 
     <!-- Build Settings -->
     <build>
-        <sourceDirectory>${basedir}/src/</sourceDirectory>
+        <sourceDirectory>${project.basedir}/src/</sourceDirectory>
 
         <!-- Resources -->
         <resources>
             <resource>
                 <targetPath>.</targetPath>
-                <directory>${basedir}/src/resources/</directory>
+                <directory>${project.basedir}/src/resources/</directory>
             </resource>
         </resources>
 

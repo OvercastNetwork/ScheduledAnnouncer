@@ -39,47 +39,14 @@ public class AnnouncerPlugin extends JavaPlugin
         }));
     }
 
-    public void announce()
+    public void doAnnouncement()
     {
         announcerThread.run();
     }
 
-    public void announce(int index)
-    {
-        announce((String)announcementMessages.get(index - 1));
-    }
-
-    public void announce(String line)
-    {
-        String messages[] = line.split("&n");
-        String arr$[] = messages;
-        int len$ = arr$.length;
-        for(int i$ = 0; i$ < len$; i$++)
-        {
-            String message = arr$[i$];
-            if(message.startsWith("/"))
-            {
-                getServer().dispatchCommand(getServer().getConsoleSender(), message.substring(1));
-                continue;
-            }
-            if(getServer().getOnlinePlayers().length > 0)
-            {
-                String messageToSend = ChatColorHelper.replaceColorCodes(announcementPrefix + message);
-                for(Player player : getServer().getOnlinePlayers())
-                {
-                    if(player.hasPermission("announcer.receiver") && PlayerSettings.getManager(player).getValue(Settings.TIPS, Boolean.class))
-                    {
-                        player.sendMessage(messageToSend.replaceAll("%player", player.getName()));
-                    }
-                }
-            }
-        }
-
-    }
-
     public void saveConfiguration()
     {
-        getConfig().set("announcement.messages", announcementMessages);
+        getConfig().set("announcement.messages", this.announcerThread.getAnnouncementMessages());
         getConfig().set("announcement.interval", Long.valueOf(announcementInterval));
         getConfig().set("announcement.prefix", announcementPrefix);
         getConfig().set("announcement.enabled", Boolean.valueOf(enabled));
@@ -122,34 +89,6 @@ public class AnnouncerPlugin extends JavaPlugin
         scheduler.scheduleSyncRepeatingTask(this, announcerThread, announcementInterval * 20L, announcementInterval * 20L);
     }
 
-    public void addAnnouncement(String message)
-    {
-        announcementMessages.add(message);
-        saveConfiguration();
-    }
-
-    public String getAnnouncement(int index)
-    {
-        return (String)announcementMessages.get(index - 1);
-    }
-
-    public int numberOfAnnouncements()
-    {
-        return announcementMessages.size();
-    }
-
-    public void removeAnnouncements()
-    {
-        announcementMessages.clear();
-        saveConfiguration();
-    }
-
-    public void removeAnnouncement(int index)
-    {
-        announcementMessages.remove(index - 1);
-        saveConfiguration();
-    }
-
     public boolean isAnnouncerEnabled()
     {
         return enabled;
@@ -172,7 +111,6 @@ public class AnnouncerPlugin extends JavaPlugin
         saveConfiguration();
     }
 
-    protected List announcementMessages;
     protected String announcementPrefix;
     protected long announcementInterval;
     protected boolean enabled;

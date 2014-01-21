@@ -7,7 +7,6 @@ public class AnnouncerPermissions
     {
     }
 
-    public static final String RECEIVER = "announcer.receiver";
     public static final String ADD = "announcer.add";
     public static final String DELETE = "announcer.delete";
     public static final String BROADCAST = "announcer.broadcast";

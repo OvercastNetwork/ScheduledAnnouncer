@@ -1,9 +1,8 @@
 package net.wiskr.ScheduledAnnouncer;
 
-import java.util.List;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.*;
-import org.bukkit.plugin.PluginDescriptionFile;
 
 class AnnouncerCommandExecutor implements CommandExecutor {
 
@@ -104,7 +103,8 @@ class AnnouncerCommandExecutor implements CommandExecutor {
                     messageToAnnounce.append(" ");
                 }
 
-                plugin.addAnnouncement(messageToAnnounce.toString());
+                // TODO: parsing
+//                plugin.addAnnouncement(messageToAnnounce.toString());
                 sender.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append("Added announcement successfully!").toString());
                 if(args.length > 100)
                     sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("This message is too long!").toString());
@@ -122,8 +122,8 @@ class AnnouncerCommandExecutor implements CommandExecutor {
             if(args.length == 2) {
                 try {
                     int index = Integer.parseInt(args[1]);
-                    if(index > 0 && index <= plugin.numberOfAnnouncements()) {
-                        plugin.announce(index);
+                    if(index > 0 && index <= plugin.getAnnouncementManager().numberOfAnnouncements()) {
+                        plugin.getAnnouncementManager().getAnnouncement(index).broadcast(Bukkit.getOnlinePlayers());
                     } else {
                         sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("There isn't any announcement with the passed index!").toString());
                         sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Use '/announce list' to view all available announcements.").toString());
@@ -134,7 +134,7 @@ class AnnouncerCommandExecutor implements CommandExecutor {
                     sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Index must be a integer!").toString());
                 }
             } else if(args.length == 1) {
-                plugin.announce();
+                plugin.callThread();
             } else {
                 sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Invalid number of arguments! Use /announce help to view the help!").toString());
             }
@@ -157,13 +157,13 @@ class AnnouncerCommandExecutor implements CommandExecutor {
                         sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Invalid page number!").toString());
                     }
                 sender.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append(String.format(" === Announcements [Page %d/%d] ===", new Object[] {
-                    Integer.valueOf(page), Integer.valueOf(plugin.announcementMessages.size() / 7 + 1)
+                    Integer.valueOf(page), Integer.valueOf(plugin.getAnnouncementManager().numberOfAnnouncements() / 7 + 1)
                 })).toString());
                 int indexStart = Math.abs(page - 1) * 7;
-                int indexStop = Math.min(page * 7, plugin.announcementMessages.size());
+                int indexStop = Math.min(page * 7, plugin.getAnnouncementManager().numberOfAnnouncements());
                 for(int index = indexStart + 1; index <= indexStop; index++)
                     sender.sendMessage(String.format("%d - %s", new Object[] {
-                        Integer.valueOf(index), ChatColorHelper.replaceColorCodes(plugin.getAnnouncement(index))
+                        Integer.valueOf(index), ChatColor.translateAlternateColorCodes('`', plugin.getAnnouncementManager().getAnnouncement(index).getMessage()),
                     }));
 
             } else {
@@ -181,11 +181,11 @@ class AnnouncerCommandExecutor implements CommandExecutor {
             if(args.length == 2) {
                 try {
                     int index = Integer.parseInt(args[1]);
-                    if(index > 0 && index <= plugin.numberOfAnnouncements()) {
+                    if(index > 0 && index <= plugin.getAnnouncementManager().numberOfAnnouncements()) {
                         sender.sendMessage(String.format("%sRemoved announcement: '%s'", new Object[] {
-                            ChatColor.GREEN, plugin.getAnnouncement(index)
+                            ChatColor.GREEN, plugin.getAnnouncementManager().getAnnouncement(index).getMessage()
                         }));
-                        plugin.removeAnnouncement(index);
+                        plugin.getAnnouncementManager().removeAnnouncement(index);
                     }
                     sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("There isn't any announcement with the passed index!").toString());
                     sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Use '/announce list' to view all available announcements.").toString());
@@ -208,7 +208,7 @@ class AnnouncerCommandExecutor implements CommandExecutor {
             if(args.length == 2) {
                 try
                 {
-                    plugin.setAnnouncementInterval(Integer.parseInt(args[1]));
+                    plugin.getAnnouncementManager().setAnnouncementInterval(Integer.parseInt(args[1]));
                     sender.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append("Set interval of scheduled announcements successfully!").toString());
                 }
                 catch(NumberFormatException e)
@@ -221,7 +221,7 @@ class AnnouncerCommandExecutor implements CommandExecutor {
                 }
             } else if(args.length == 1) {
                 sender.sendMessage(String.format("%sPeriod duration is %d", new Object[] {
-                    ChatColor.LIGHT_PURPLE, Long.valueOf(plugin.getAnnouncementInterval())
+                    ChatColor.LIGHT_PURPLE, Long.valueOf(plugin.getAnnouncementManager().getAnnouncementInterval())
                 }));
             } else {
                 sender.sendMessage((new StringBuilder()).append(ChatColor.RED).append("Too many arguments! Use '/announce help' to view the help!").toString());
@@ -245,12 +245,12 @@ class AnnouncerCommandExecutor implements CommandExecutor {
                     prefixBuilder.append(" ");
                 }
 
-                plugin.setAnnouncementPrefix(prefixBuilder.toString());
+                plugin.getAnnouncementManager().setAnnouncementPrefix(prefixBuilder.toString());
                 sender.sendMessage((new StringBuilder()).append(ChatColor.GREEN).append("Set prefix for all announcements successfully!").toString());
             } else
             {
                 sender.sendMessage(String.format("%sPrefix is %s", new Object[] {
-                    ChatColor.LIGHT_PURPLE, ChatColorHelper.replaceColorCodes(plugin.getAnnouncementPrefix())
+                    ChatColor.LIGHT_PURPLE, ChatColor.translateAlternateColorCodes('`', plugin.getAnnouncementManager().getAnnouncementPrefix())
                 }));
             }
             return true;
@@ -353,6 +353,5 @@ class AnnouncerCommandExecutor implements CommandExecutor {
         }
     }
 
-    private static final int ENTRIES_PER_PAGE = 7;
     private final AnnouncerPlugin plugin;
 }

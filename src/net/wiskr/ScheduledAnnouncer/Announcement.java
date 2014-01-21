@@ -49,10 +49,10 @@ public class Announcement {
                 while (playerIterator.hasNext()) {
                     Player recipient = playerIterator.next();
                     
-                    if (exemptPermission != null && recipient.hasPermission(exemptPermission)) {
-                        recipient.sendMessage(message);
-                    } else if (recievePermission != null && recipient.hasPermission(recievePermission)) {
-                        recipient.sendMessage(message);
+                    if (getExemptPermission() != null && recipient.hasPermission(getExemptPermission())) {
+                        recipient.sendMessage(getMessage());
+                    } else if (getRecievePermission() != null && recipient.hasPermission(getRecievePermission())) {
+                        recipient.sendMessage(getMessage());
                     }
 
                     playerIterator.remove();

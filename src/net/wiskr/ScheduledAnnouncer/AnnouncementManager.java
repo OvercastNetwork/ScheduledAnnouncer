@@ -1,5 +1,6 @@
 package net.wiskr.ScheduledAnnouncer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -14,6 +15,7 @@ public class AnnouncementManager {
     public AnnouncementManager(AnnouncerThread parent)
     {
         this.parent = parent;
+        this.announcements = new ArrayList<Announcement>();
     }
     
     public String getAnnouncementPrefix()

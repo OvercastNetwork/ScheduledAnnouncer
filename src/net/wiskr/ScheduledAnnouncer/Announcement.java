@@ -19,8 +19,8 @@ import com.google.common.base.Preconditions;
 public class Announcement {
 
     private final @Nonnull String message;
-    private final @Nullable Permission exemptPermission;
-    private final @Nullable Permission recievePermission;
+    private @Nullable Permission exemptPermission;
+    private @Nullable Permission recievePermission;
 
     public Announcement(@Nonnull String message) {
         this(message, null, null);
@@ -42,6 +42,14 @@ public class Announcement {
 
     public @Nullable Permission getRecievePermission() {
         return this.recievePermission;
+    }
+    
+    public void setExemptPermission(Permission permission) {
+        this.exemptPermission = permission;
+    }
+
+    public void setRecievePermission(Permission permission) {
+        this.recievePermission = permission;
     }
 
     public void broadcast(final Player[] recipients) {

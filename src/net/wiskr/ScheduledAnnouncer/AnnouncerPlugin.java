@@ -44,7 +44,9 @@ public class AnnouncerPlugin extends JavaPlugin
 
     public void saveConfiguration()
     {
-//        getConfig().set("announcement.messages", this.announcerThread.getAnnouncementMessages());
+        for (Announcement announcement : this.announcementManager.getAnnouncements()) {
+            YamlAnnouncement.save(announcement, this.getConfig().getConfigurationSection("announcement.messages"), true);
+        }
         getConfig().set("announcement.interval", Long.valueOf(this.announcementManager.getAnnouncementInterval()));
         getConfig().set("announcement.prefix", this.announcementManager.getAnnouncementPrefix());
         getConfig().set("announcement.enabled", Boolean.valueOf(this.enabled));

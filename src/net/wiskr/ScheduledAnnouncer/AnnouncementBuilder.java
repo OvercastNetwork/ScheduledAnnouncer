@@ -21,7 +21,7 @@ public class AnnouncementBuilder {
     }
     
     public AnnouncementBuilder build() {
-        for(Map.Entry<String, Object> entry : config.getValues(false).entrySet()) {
+        for(Map.Entry<String, Object> entry : config.getValues(true).entrySet()) {
             MemorySection options = (MemorySection) entry.getValue();
             Announcement announcement = new Announcement(entry.getKey());
             

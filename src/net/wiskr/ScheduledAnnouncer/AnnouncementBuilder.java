@@ -18,9 +18,7 @@ public class AnnouncementBuilder {
     public AnnouncementBuilder(ConfigurationSection config) {
         this.announcements = new ArrayList<Announcement>();
         this.config = Preconditions.checkNotNull(config, "config");
-    }
-    
-    public AnnouncementBuilder build() {
+
         for(Map.Entry<String, Object> entry : config.getValues(true).entrySet()) {
             MemorySection options = (MemorySection) entry.getValue();
             Announcement announcement = new Announcement(entry.getKey());
@@ -30,10 +28,9 @@ public class AnnouncementBuilder {
             
             this.announcements.add(announcement);
         }
-        return this;
     }
     
-    public List<Announcement> pack() {
+    public List<Announcement> getAnnouncements() {
         return this.announcements;
     }
 }

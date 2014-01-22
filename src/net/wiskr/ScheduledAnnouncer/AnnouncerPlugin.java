@@ -57,7 +57,7 @@ public class AnnouncerPlugin extends JavaPlugin
         reloadConfig();
         this.announcementManager.setAnnouncementPrefix(getConfig().getString("announcement.prefix", "&c[Announcement] "));
         this.announcementManager.removeAnnouncements();
-        this.announcementManager.getAnnouncements().addAll(new AnnouncementBuilder(this.getConfig().getConfigurationSection("announcement.messages")).build().pack());
+        this.announcementManager.getAnnouncements().addAll(new AnnouncementBuilder(this.getConfig().getConfigurationSection("announcement.messages")).getAnnouncements());
         this.announcementManager.setAnnouncementInterval(getConfig().getInt("announcement.interval", 1000));
         enabled = getConfig().getBoolean("announcement.enabled", true);
         random = getConfig().getBoolean("announcement.random", false);

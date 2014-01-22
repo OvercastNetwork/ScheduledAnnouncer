@@ -19,14 +19,19 @@ public class AnnouncerPlugin extends JavaPlugin
     {
         this.announcementManager = new AnnouncementManager(this.announcerThread);
         logger = getServer().getLogger();
-        if(!(new File(getDataFolder(), "config.yml")).exists())
-            saveDefaultConfig();
-        reloadConfiguration();
+        
+        this.saveDefaultConfig();
+        this.getConfig().options().copyDefaults(true);
+        System.out.println(this.getConfig().getConfigurationSection("announcement.messages"));
+        this.reloadConfiguration();
+        
         BukkitScheduler scheduler = getServer().getScheduler();
         scheduler.scheduleSyncRepeatingTask(this, announcerThread, this.announcementManager.getAnnouncementInterval() * TICKS_PER_SECOND, this.announcementManager.getAnnouncementInterval() * TICKS_PER_SECOND);
+        
         AnnouncerCommandExecutor announcerCommandExecutor = new AnnouncerCommandExecutor(this);
         getCommand("announce").setExecutor(announcerCommandExecutor);
         getCommand("announcer").setExecutor(announcerCommandExecutor);
+
         Settings.register();
     }
 

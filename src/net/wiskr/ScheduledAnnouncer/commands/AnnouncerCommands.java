@@ -229,16 +229,16 @@ public class AnnouncerCommands {
     public static void enable(CommandContext args, CommandSender sender) throws CommandException {
         if (args.argsLength() == 1) {
             if (args.getString(0).equalsIgnoreCase("true")) {
-                plugin.enabled = true;
+                plugin.setAnnouncerEnabled(true);
             } else if(args.getString(0).equalsIgnoreCase("false")) {
-                plugin.enabled = false;
+                plugin.setAnnouncerEnabled(false);
             } else {
                 throw new CommandException("Use <true|false> to set the state of the plugin.");
             }
         } else {
-            plugin.enabled = !plugin.enabled;
+            plugin.setAnnouncerEnabled(!plugin.isEnabled());
         }
-        sender.sendMessage(ChatColor.GREEN + (plugin.enabled ? "Enabled" : "Disabled") + "plugin succesfully!");
+        sender.sendMessage(ChatColor.GREEN + (plugin.isEnabled() ? "Enabled" : "Disabled") + "plugin succesfully!");
     }
 
     @Command(

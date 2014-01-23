@@ -28,7 +28,8 @@ announcement:
 
     # List of messages to announce. You could use color codes by using & + hex chars too.
     messages:
-    - 'This is the first default announcement!'
-    - 'Use /announce help to get info how to config this plugin.'
-    - 'You can also configure this plugin with its config.yml too!'
-    
+      - "Check us out on the web! &boc.tc"
+      - "&b20% off &7all ranks! &boc.tc/shop":
+        exempt-permission: "pgm.donor"
+      - "Follow us on twitter! &btwitter.com/OvercastNetwork":
+        permission: "pgm.coolguy"

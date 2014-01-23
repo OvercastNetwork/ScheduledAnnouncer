@@ -15,11 +15,7 @@ import com.sk89q.minecraft.util.commands.CommandPermissions;
 
 public class AnnouncerCommands {
 
-    private static final AnnouncerPlugin plugin;
-    
-    static {
-        plugin = (AnnouncerPlugin) Bukkit.getPluginManager().getPlugin("ScheduledAnnouncer2");
-    }
+    private static final AnnouncerPlugin plugin = AnnouncerPlugin.getInstance();
 
     @Command(
         aliases = {"version", "info"},

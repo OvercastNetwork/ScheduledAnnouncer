@@ -28,6 +28,8 @@ public class AnnouncerPlugin extends JavaPlugin
 
     public void onEnable()
     {
+        instance = this;
+
         this.announcementManager = new AnnouncementManager(this.announcerThread);
         logger = getServer().getLogger();
         
@@ -44,6 +46,8 @@ public class AnnouncerPlugin extends JavaPlugin
 
     public void onDisable()
     {
+        instance = null;
+
         logger.info(String.format("%s is disabled!\n", new Object[] {
             getDescription().getFullName()
         }));
@@ -148,7 +152,11 @@ public class AnnouncerPlugin extends JavaPlugin
             this.announcerThread.run();            
         }
     }
-    
+
+    public static AnnouncerPlugin getInstance() {
+        return instance;
+    }
+
     private CommandsManager<CommandSender> commands;
     private static final long TICKS_PER_SECOND = 20L;
     protected boolean enabled;
@@ -156,4 +164,5 @@ public class AnnouncerPlugin extends JavaPlugin
     private AnnouncerThread announcerThread;
     private Logger logger;
     private AnnouncementManager announcementManager;
+    private static AnnouncerPlugin instance;
 }

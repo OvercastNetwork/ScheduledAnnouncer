@@ -1,7 +1,9 @@
-package net.wiskr.ScheduledAnnouncer;
+package net.wiskr.ScheduledAnnouncer.plugin;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import net.wiskr.ScheduledAnnouncer.announcements.Announcement;
 
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitScheduler;

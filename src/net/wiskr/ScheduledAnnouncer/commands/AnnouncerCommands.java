@@ -1,4 +1,7 @@
-package net.wiskr.ScheduledAnnouncer;
+package net.wiskr.ScheduledAnnouncer.commands;
+
+import net.wiskr.ScheduledAnnouncer.announcements.Announcement;
+import net.wiskr.ScheduledAnnouncer.plugin.AnnouncerPlugin;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

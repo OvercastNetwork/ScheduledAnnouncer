@@ -1,7 +1,11 @@
-package net.wiskr.ScheduledAnnouncer;
+package net.wiskr.ScheduledAnnouncer.plugin;
 
 import java.util.logging.Logger;
 
+import net.wiskr.ScheduledAnnouncer.announcements.Announcement;
+import net.wiskr.ScheduledAnnouncer.announcements.AnnouncementBuilder;
+import net.wiskr.ScheduledAnnouncer.announcements.YamlAnnouncement;
+import net.wiskr.ScheduledAnnouncer.commands.AnnouncerCommands;
 import net.wiskr.ScheduledAnnouncer.settings.Settings;
 
 import org.bukkit.ChatColor;

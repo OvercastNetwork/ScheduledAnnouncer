@@ -1,4 +1,4 @@
-package net.wiskr.ScheduledAnnouncer;
+package net.wiskr.ScheduledAnnouncer.announcements;
 
 import java.util.Map;
 

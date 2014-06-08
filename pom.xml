@@ -9,6 +9,18 @@
     <url>http://dev.bukkit.org/server-mods/scheduledannouncer2/</url>
     <description>Scheduled Announcer is a very simple tool, which only does what's its name told us. It automatically sends a broadcast out of a list controlled by a scheduled.</description>
 
+    <!-- Deployment -->
+    <distributionManagement>
+        <repository>
+            <id>overcast-deployment</id>
+            <url>https://repo.oc.tc/content/repositories/releases-private</url>
+        </repository>
+        <snapshotRepository>
+            <id>overcast-deployment</id>
+            <url>https://repo.oc.tc/content/repositories/snapshots-private</url>
+        </snapshotRepository>
+    </distributionManagement>
+
     <!-- Repository Locations -->
     <repositories>
         <repository>
@@ -32,7 +44,7 @@
         <dependency>
             <groupId>me.anxuiz</groupId>
             <artifactId>bukkit-settings</artifactId>
-            <version>0.4.0-SNAPSHOT</version>
+            <version>0.5.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

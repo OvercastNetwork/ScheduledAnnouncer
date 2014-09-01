@@ -62,7 +62,7 @@ public class AnnouncerPlugin extends JavaPlugin
                 getServer().dispatchCommand(getServer().getConsoleSender(), message.substring(1));
                 continue;
             }
-            if(getServer().getOnlinePlayers().length > 0)
+            if(getServer().getOnlinePlayers().size() > 0)
             {
                 String messageToSend = ChatColorHelper.replaceColorCodes(announcementPrefix + message);
                 for(Player player : getServer().getOnlinePlayers())

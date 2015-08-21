@@ -51,30 +51,21 @@ public class AnnouncerPlugin extends JavaPlugin
 
     public void announce(String line)
     {
-        String messages[] = line.split("&n");
-        String arr$[] = messages;
-        int len$ = arr$.length;
-        for(int i$ = 0; i$ < len$; i$++)
+        if(line.startsWith("/"))
         {
-            String message = arr$[i$];
-            if(message.startsWith("/"))
+            getServer().dispatchCommand(getServer().getConsoleSender(), line.substring(1));
+        }
+        else if(getServer().getOnlinePlayers().size() > 0)
+        {
+            String messageToSend = ChatColorHelper.replaceColorCodes(announcementPrefix + line);
+            for(Player player : getServer().getOnlinePlayers())
             {
-                getServer().dispatchCommand(getServer().getConsoleSender(), message.substring(1));
-                continue;
-            }
-            if(getServer().getOnlinePlayers().size() > 0)
-            {
-                String messageToSend = ChatColorHelper.replaceColorCodes(announcementPrefix + message);
-                for(Player player : getServer().getOnlinePlayers())
+                if(player.hasPermission("announcer.receiver") && PlayerSettings.getManager(player).getValue(Settings.TIPS, Boolean.class))
                 {
-                    if(player.hasPermission("announcer.receiver") && PlayerSettings.getManager(player).getValue(Settings.TIPS, Boolean.class))
-                    {
-                        player.sendMessage(messageToSend.replaceAll("%player", player.getName()));
-                    }
+                    player.sendMessage(messageToSend.replaceAll("%player", player.getName()));
                 }
             }
         }
-
     }
 
     public void saveConfiguration()

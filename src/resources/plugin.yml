@@ -5,6 +5,7 @@ description: Automatically Announce tips and news!
 website: http://github.com/whisk1/ScheduledAnnouncer
 authors:
  - 'whisk1'
+depend: [BukkitSettings]
 
 commands:
   announce:
